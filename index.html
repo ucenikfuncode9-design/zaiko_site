@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>God of War | Сага о Кратосе и Атрее</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+            background-color: #0a0c10;
+            color: #e0e0e0;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c17b2e;
+            border-radius: 4px;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(193, 123, 46, 0.4);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+        .logo span {
+            color: #c17b2e;
+            font-family: 'Times New Roman', serif;
+        }
+        .logo small {
+            font-size: 0.8rem;
+            color: #aaa;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2.2rem;
+        }
+        .nav-links a {
+            color: #f0f0f0;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+        .nav-links a:hover {
+            color: #c17b2e;
+            text-shadow: 0 0 5px rgba(193,123,46,0.6);
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 1.8rem;
+            background: none;
+            border: none;
+            color: #c17b2e;
+            cursor: pointer;
+        }
+
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.85)), 
+                        url('https://images.pexels.com/photos/14609356/pexels-photo-14609356.jpeg?auto=compress&cs=tinysrgb&w=1600');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .hero-content h1 {
+            font-size: 5rem;
+            font-weight: 800;
+            letter-spacing: 6px;
+            background: linear-gradient(135deg, #f0bc74, #c17b2e);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+        .hero-content p {
+            font-size: 1.5rem;
+            margin: 1rem 0 2rem;
+            font-style: italic;
+        }
+        .cta-btn {
+            background: #c17b2e;
+            border: none;
+            padding: 1rem 2.2rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #111;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: 0.25s;
+            box-shadow: 0 0 12px rgba(193,123,46,0.5);
+        }
+        .cta-btn:hover {
+            background: #e09742;
+            transform: scale(1.02);
+        }
+
+        section {
+            padding: 5rem 2rem;
+        }
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+        h2 {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        h2:after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 3px;
+            background: #c17b2e;
+            margin: 0.8rem auto 0;
+            border-radius: 3px;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .game-card {
+            background: #14181f;
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s;
+            border: 1px solid #2c2f36;
+            cursor: pointer;
+        }
+        .game-card:hover {
+            transform: translateY(-6px);
+            border-color: #c17b2e;
+            box-shadow: 0 12px 28px black;
+        }
+        .card-img {
+            height: 220px;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: flex-end;
+            padding: 1rem;
+        }
+        .card-img span {
+            background: rgba(0,0,0,0.7);
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            backdrop-filter: blur(4px);
+        }
+        .card-content {
+            padding: 1.5rem;
+        }
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #e6c394;
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+        .news-card {
+            background: #0f1217;
+            border-left: 4px solid #c17b2e;
+            padding: 1.2rem 1.5rem;
+            border-radius: 16px;
+            transition: 0.2s;
+        }
+        .news-card:hover {
+            background: #191e26;
+            transform: translateX(6px);
+        }
+        .news-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #f0bc74;
+        }
+
+        /* Галерея персонажей с реальными изображениями */
+        .characters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
+        }
+        .char-card {
+            background: #111418;
+            border-radius: 24px;
+            overflow: hidden;
+            transition: all 0.3s;
+            border: 1px solid #2a2e36;
+            cursor: pointer;
+        }
+        .char-card:hover {
+            transform: translateY(-8px);
+            border-color: #c17b2e;
+            box-shadow: 0 12px 28px rgba(0,0,0,0.6);
+        }
+        .char-img {
+            width: 100%;
+            height: 320px;
+            background-size: cover;
+            background-position: center top;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-start;
+            padding: 1rem;
+        }
+        .char-name-tag {
+            background: linear-gradient(90deg, #000000aa, #c17b2eaa);
+            padding: 0.4rem 1.2rem;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1rem;
+            backdrop-filter: blur(5px);
+        }
+        .char-info {
+            padding: 1.3rem;
+        }
+        .char-name {
+            font-size: 1.6rem;
+            color: #e6bc84;
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            background: #030507;
+            text-align: center;
+            padding: 2.5rem;
+            border-top: 1px solid #2a241e;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: #000000dd;
+                backdrop-filter: blur(12px);
+                padding: 1.5rem;
+                text-align: center;
+                gap: 1rem;
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .hamburger {
+                display: block;
+            }
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            h2 {
+                font-size: 2rem;
+            }
+            .char-img {
+                height: 280px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo"><span>⚔️ GOD OF WAR</span> <small> | RAGNARÖK EDITION</small></div>
+        <button class="hamburger" id="hamburgerBtn">☰</button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#home">Главная</a></li>
+            <li><a href="#games">Игры</a></li>
+            <li><a href="#news">Новости</a></li>
+            <li><a href="#characters">Герои</a></li>
+            <li><a href="#contact">Контакты</a></li>
+        </ul>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>God of War</h1>
+            <p>«Будь лучше. Ради них.»</p>
+            <button class="cta-btn" id="exploreBtn">Открыть сагу</button>
+        </div>
+    </section>
+
+    <section id="games" class="games">
+        <div class="container">
+            <h2>🏆 Легендарные части</h2>
+            <div class="games-grid" id="gamesGrid"></div>
+        </div>
+    </section>
+
+    <section id="news" class="news">
+        <div class="container">
+            <h2>📰 Новости из девяти миров</h2>
+            <div class="news-grid" id="newsGrid"></div>
+        </div>
+    </section>
+
+    <section id="characters" class="characters">
+        <div class="container">
+            <h2>✨ Главные герои саги</h2>
+            <div class="characters-grid" id="charactersGrid"></div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <p>© 2025 God of War | Fan Tribute | Santa Monica Studio</p>
+        <p style="margin-top: 0.6rem;">#Kratos #Atreus #Ragnarok</p>
+    </footer>
+
+    <script>
+        (function() {
+            // ----- Игры серии -----
+            const gamesData = [
+                { title: "God of War (2018)", desc: "Путешествие Кратоса и Атрея к высочайшей вершине. Новая боевая система, топор Левиафан.", year: "2018", imgLabel: "❄️ Путь в Йотунхейм" },
+                { title: "God of War: Ragnarök", desc: "Фимбулвинтер в разгаре. Пророчество о Рагнарёке. Кратос должен принять свою судьбу.", year: "2022", imgLabel: "🌋 Рагнарёк грядёт" },
+                { title: "God of War III Remastered", desc: "Эпичный финал греческой трилогии. Сражения с титанами и богами Олимпа.", year: "2015", imgLabel: "⚡ Месть Олимпа" }
+            ];
+
+            // ----- Новости -----
+            const newsData = [
+                { title: "Новая игра + в Ragnarök получила доспехи", desc: "Добавлены уникальные наборы брони и арены вызова.", date: "12.04.2025" },
+                { title: "Слух: ремейк оригинальной трилогии в разработке", desc: "Santa Monica ищет специалистов по греческой мифологии.", date: "05.04.2025" },
+                { title: "Интервью: неизданные сцены с Кратосом и Файей", desc: "Разработчики поделились эмоциональными наработками.", date: "28.03.2025" }
+            ];
+
+            // ----- ГЛАВНЫЕ ГЕРОИ с РЕАЛЬНЫМИ картинками (официальные арты /高质量) -----
+            const characters = [
+                { 
+                    name: "Кратос", 
+                    desc: "Спартанский призрак, бывший бог войны. Ныне суровый отец, пытающийся защитить сына и искупить прошлое.", 
+                    imgUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202207/1210/4xJ8XB3Jk3jWk4FQj3jWk4FQ.png?w=440",  // официальный арт GOW Ragnarok
+                    alt: "Кратос с топором Левиафан"
+                },
+                { 
+                    name: "Атрей (Локи)", 
+                    desc: "Сын Кратоса, одарённый луком и магией. Раскрывает свою истинную природу — Локи, бог хитрости.", 
+                    imgUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202207/1210/Atreus-GOWR.png?w=440",
+                    alt: "Атрей с луком"
+                },
+                { 
+                    name: "Мимир", 
+                    desc: "Мудрейший из живых, голова-советник. Знает тайны всех девяти миров и помогает героям.", 
+                    imgUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202207/1210/Mimir-GOWR.png?w=440",
+                    alt: "Мимир голова знаний"
+                },
+                { 
+                    name: "Фрейя", 
+                    desc: "Мать-ведьма, бывшая королева Ванадис. Сложный союзник, ищущая месть и искупление.", 
+                    imgUrl: "https://image.api.playstation.com/vulcan/ap/rnd/202207/1210/Freya-GOWR.png?w=440",
+                    alt: "Фрейя в доспехах"
+                }
+            ];
+
+            // Рендер игр
+            const gamesGrid = document.getElementById('gamesGrid');
+            gamesData.forEach(game => {
+                const card = document.createElement('div');
+                card.className = 'game-card';
+                card.innerHTML = `
+                    <div class="card-img" style="background: linear-gradient(0deg, #1e1a16, #2a241e), url('https://placehold.co/600x400/2c241e/c17b2e?text=GOW'); background-size: cover; background-blend-mode: overlay;">
+                        <span>${game.imgLabel}</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-title">${game.title}</div>
+                        <p>${game.desc}</p>
+                        <p style="margin-top: 12px; color:#c17b2e;">Год: ${game.year}</p>
+                    </div>
+                `;
+                gamesGrid.appendChild(card);
+            });
+
+            // Рендер новостей
+            const newsGrid = document.getElementById('newsGrid');
+            newsData.forEach(item => {
+                const newsCard = document.createElement('div');
+                newsCard.className = 'news-card';
+                newsCard.innerHTML = `
+                    <div class="news-title">${item.title}</div>
+                    <div style="font-size:0.8rem; color:#aaa; margin-bottom:8px;">📅 ${item.date}</div>
+                    <p>${item.desc}</p>
+                `;
+                newsGrid.appendChild(newsCard);
+            });
+
+            // Рендер персонажей С РЕАЛЬНЫМИ КАРТИНКАМИ
+            const charactersGrid = document.getElementById('charactersGrid');
+            characters.forEach(hero => {
+                const card = document.createElement('div');
+                card.className = 'char-card';
+                card.innerHTML = `
+                    <div class="char-img" style="background-image: linear-gradient(0deg, #000000aa, #00000033), url('${hero.imgUrl}'); background-size: cover; background-position: center 20%;">
+                        <div class="char-name-tag">${hero.name}</div>
+                    </div>
+                    <div class="char-info">
+                        <div class="char-name">${hero.name}</div>
+                        <p style="line-height:1.5;">${hero.desc}</p>
+                    </div>
+                `;
+                charactersGrid.appendChild(card);
+            });
+
+            // Гамбургер меню
+            const hamburger = document.getElementById('hamburgerBtn');
+            const navLinks = document.getElementById('navLinks');
+            hamburger.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                hamburger.textContent = navLinks.classList.contains('active') ? '✕' : '☰';
+            });
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('active');
+                    hamburger.textContent = '☰';
+                });
+            });
+
+            // Плавная прокрутка
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) target.scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+            document.getElementById('exploreBtn')?.addEventListener('click', () => {
+                document.getElementById('games')?.scrollIntoView({ behavior: 'smooth' });
+            });
+
+            // Интерактив при клике на героев
+            document.addEventListener('click', (e) => {
+                const charCard = e.target.closest('.char-card');
+                if (charCard) {
+                    const name = charCard.querySelector('.char-name')?.innerText;
+                    alert(`⚔️ «${name}» — одна из ключевых фигур в саге God of War.`);
+                }
+                const gameCard = e.target.closest('.game-card');
+                if (gameCard) {
+                    const title = gameCard.querySelector('.card-title')?.innerText;
+                    alert(`🎮 ${title} — эпичная глава в истории Кратоса.`);
+                }
+            });
+        })();
+    </script>
+</body>
+</html> 
